@@ -1,0 +1,313 @@
+definitions:
+  helper.ErrorResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  model.CategoryCreate:
+    properties:
+      type:
+        type: string
+    type: object
+  model.CategoryUpdate:
+    properties:
+      type:
+        type: string
+    type: object
+  model.LoginCredential:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  model.Task:
+    properties:
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      status:
+        type: boolean
+      title:
+        type: string
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/model.User'
+      user_id:
+        type: integer
+    type: object
+  model.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+      photos:
+        items:
+          $ref: '#/definitions/model.Task'
+        type: array
+      role:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  model.UserCreate:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      password:
+        type: string
+    type: object
+  model.UserUpdate:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a simple server mimicking Instagram server.
+  title: Kanban Board
+  version: "1.0"
+paths:
+  /categories:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Category object to be created
+        in: body
+        name: model.Category
+        required: true
+        schema:
+          $ref: '#/definitions/model.CategoryCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Category created successfully
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Creates a new category
+      tags:
+      - Categories
+  /categories/{categoryId}:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Category ID
+        in: path
+        name: categoryId
+        required: true
+        type: integer
+      - description: Category object to be updated
+        in: body
+        name: model.Category
+        required: true
+        schema:
+          $ref: '#/definitions/model.CategoryUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Category updated successfully
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Update a Category.
+      tags:
+      - Categories
+  /users/delete-account:
+    delete:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User deleted successfully
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Delete an Account.
+      tags:
+      - Users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User login credentials
+        in: body
+        name: model.User
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginCredential'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User logged in successfully
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Login an Account.
+      tags:
+      - Users
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User object to be created
+        in: body
+        name: model.User
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Register an Account.
+      tags:
+      - Users
+  /users/update-account:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: User object to be updated
+        in: body
+        name: model.User
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User updated successfully
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Update an Account.
+      tags:
+      - Users
+swagger: "2.0"

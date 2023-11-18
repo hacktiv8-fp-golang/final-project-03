@@ -11,6 +11,7 @@ import (
 type categoryServiceRepo interface {
 	CreateCategory(*model.Category) (*model.Category, helper.Error)
 	UpdateCategory(*model.CategoryUpdate, uint) (*model.Category, helper.Error)
+	GetAllCategories() ([]*model.Category, helper.Error)
 }
 
 type categoryService struct{}
@@ -41,4 +42,14 @@ func (t *categoryService) UpdateCategory(category *model.CategoryUpdate, categor
 	}
 
 	return result, nil
+}
+
+func (c *categoryService) GetAllCategories() ([]*model.Category, helper.Error) {
+	categories, err := repository.CategoryModel.GetAllCategories()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return categories, nil
 }

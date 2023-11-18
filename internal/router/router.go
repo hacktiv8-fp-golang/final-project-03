@@ -28,7 +28,7 @@ func StartServer() {
 	{
 		categoryRouter.Use(middleware.Authentication())
 		categoryRouter.POST("/", middleware.AdminAuthorization(), controller.CreateCategory)
-		categoryRouter.GET("/")
+		categoryRouter.GET("/", controller.GetAllCategories)
 		categoryRouter.PATCH("/:categoryId",  middleware.AdminAuthorization(), middleware.CategoryAuthorization(), controller.UpdateCategory)
 		categoryRouter.DELETE("/:categoryId")
 	}

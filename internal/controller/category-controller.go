@@ -82,3 +82,44 @@ func UpdateCategory(context *gin.Context) {
 		"updated_at": result.UpdatedAt,
 	})
 }
+
+func GetAllCategories(context *gin.Context) {
+	categories, err := service.CategoryService.GetAllCategories()
+
+	if err != nil {
+		context.JSON(err.Status(), err)
+		return
+	}
+
+	var categoriesMaps []map[string]interface{}
+
+	for _, category := range categories {
+		var taskMaps []map[string]interface{}
+
+		for _, task := range category.Tasks {
+			taskMap := map[string]interface{}{
+				"id": task.ID,
+				"title": task.Title,
+				"description": task.Description,
+				"user_id": task.UserID,
+				"category_id": task.CategoryID,
+				"created_at": task.CreatedAt,
+				"updated_at": task.UpdatedAt,
+			}
+
+			taskMaps = append(taskMaps, taskMap)
+		}
+
+		categoryMap := map[string]interface{}{
+			"id": category.ID,
+			"type": category.Type,
+			"created_at": category.CreatedAt,
+			"updated_at": category.UpdatedAt,
+			"Tasks": taskMaps,
+		}
+
+		categoriesMaps = append(categoriesMaps, categoryMap)
+	}
+
+	context.JSON(http.StatusOK, categoriesMaps)
+}

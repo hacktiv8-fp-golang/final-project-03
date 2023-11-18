@@ -30,7 +30,7 @@ func StartServer() {
 		categoryRouter.POST("/", middleware.AdminAuthorization(), controller.CreateCategory)
 		categoryRouter.GET("/", controller.GetAllCategories)
 		categoryRouter.PATCH("/:categoryId",  middleware.AdminAuthorization(), middleware.CategoryAuthorization(), controller.UpdateCategory)
-		categoryRouter.DELETE("/:categoryId")
+		categoryRouter.DELETE("/:categoryId", middleware.AdminAuthorization(), middleware.CategoryAuthorization(), controller.DeleteCategory)
 	}
 
 	taskRouter := router.Group("/comments")

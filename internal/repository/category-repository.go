@@ -10,6 +10,7 @@ type categoryModelRepo interface {
 	CreateCategory(*model.Category) (*model.Category, helper.Error)
 	UpdateCategory(*model.CategoryUpdate, uint) (*model.Category, helper.Error)
 	GetAllCategories() ([]*model.Category, helper.Error)
+	DeleteCategory(uint) helper.Error
 }
 
 type categoryModel struct{}
@@ -55,4 +56,19 @@ func (c *categoryModel) GetAllCategories() ([]*model.Category, helper.Error) {
 	}
 
 	return categories, nil
+}
+
+func (c *categoryModel) DeleteCategory(categoryId uint) helper.Error {
+	db := database.GetDB()
+	var category model.Category
+
+	err := db.First(&category, categoryId).Error
+
+	if err != nil {
+		return helper.ParseError(err)
+	}
+
+	db.Delete(&category)
+
+	return nil
 }

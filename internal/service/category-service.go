@@ -12,6 +12,7 @@ type categoryServiceRepo interface {
 	CreateCategory(*model.Category) (*model.Category, helper.Error)
 	UpdateCategory(*model.CategoryUpdate, uint) (*model.Category, helper.Error)
 	GetAllCategories() ([]*model.Category, helper.Error)
+	DeleteCategory(uint) helper.Error
 }
 
 type categoryService struct{}
@@ -52,4 +53,14 @@ func (c *categoryService) GetAllCategories() ([]*model.Category, helper.Error) {
 	}
 
 	return categories, nil
+}
+
+func (c *categoryService) DeleteCategory(categoryId uint) helper.Error {
+	err := repository.CategoryModel.DeleteCategory(categoryId)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

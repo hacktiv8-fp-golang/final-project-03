@@ -123,3 +123,18 @@ func GetAllCategories(context *gin.Context) {
 
 	context.JSON(http.StatusOK, categoriesMaps)
 }
+
+func DeleteCategory(context *gin.Context) {
+	id, _ := helper.GetIdParam(context, "categoryId")
+
+	err := service.CategoryService.DeleteCategory(id)
+
+	if err != nil {
+		context.JSON(err.Status(), err)
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Category has been successfully deleted",
+	})
+}

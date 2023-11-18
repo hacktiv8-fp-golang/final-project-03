@@ -82,3 +82,94 @@ func UpdateCategory(context *gin.Context) {
 		"updated_at": result.UpdatedAt,
 	})
 }
+
+// GetAllCategories godoc
+// @Summary Get all categories
+// @Description Retrieve a list of all categories
+// @Tags Categories
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer Token"
+// @Success 200 {object} []model.Category
+// @Failure 400 {object} helper.ErrorResponse "Bad Request"
+// @Failure 401 {object} helper.ErrorResponse "Unauthorized"
+// @Failure 404 {object} helper.ErrorResponse "Not Found"
+// @Failure 500 {object} helper.ErrorResponse "Server Error"
+// @Security Bearer
+// @Router /categories [get]
+func GetAllCategories(context *gin.Context) {
+	categories, err := service.CategoryService.GetAllCategories()
+
+	if err != nil {
+		context.JSON(err.Status(), err)
+		return
+	}
+
+	var categoriesMaps []map[string]interface{}
+
+	for _, category := range categories {
+		categoryMap := createCategoryMap(category)
+		categoriesMaps = append(categoriesMaps, categoryMap)
+	}
+
+	context.JSON(http.StatusOK, categoriesMaps)
+}
+
+func createCategoryMap(category *model.Category) map[string]interface{} {
+	var taskMaps []map[string]interface{}
+
+	for _, task := range category.Tasks {
+		taskMap := createTaskMap(&task)
+		taskMaps = append(taskMaps, taskMap)
+	}
+
+	return map[string]interface{}{
+		"id": category.ID,
+		"type": category.Type,
+		"created_at": category.CreatedAt,
+		"updated_at": category.UpdatedAt,
+		"Tasks": taskMaps,
+	}
+}
+
+func createTaskMap(task *model.Task) map[string]interface{} {
+	return map[string]interface{}{
+		"id": task.ID,
+		"title": task.Title,
+		"description": task.Description,
+		"user_id": task.UserID,
+		"category_id": task.CategoryID,
+		"created_at": task.CreatedAt,
+		"updated_at": task.UpdatedAt,
+	}
+}
+
+// DeleteCategory godoc
+// @Summary Delete a category item
+// @Description Delete a category item by id
+// @Tags Categories
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer Token"
+// @Param categoryId path int true "Category id"
+// @Success 200 {string} string "OK"
+// @Failure 400 {object} helper.ErrorResponse "Bad Request"
+// @Failure 401 {object} helper.ErrorResponse "Unauthorized"
+// @Failure 404 {object} helper.ErrorResponse "Not Found"
+// @Failure 500 {object} helper.ErrorResponse "Server Error"
+// @Security Bearer
+// @Router /categories/{categoryId} [delete]
+func DeleteCategory(context *gin.Context) {
+	id, _ := helper.GetIdParam(context, "categoryId")
+
+	err := service.CategoryService.DeleteCategory(id)
+
+	if err != nil {
+		context.JSON(err.Status(), err)
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Category has been successfully deleted",
+	})
+}

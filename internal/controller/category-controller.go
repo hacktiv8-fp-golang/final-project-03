@@ -108,34 +108,40 @@ func GetAllCategories(context *gin.Context) {
 	var categoriesMaps []map[string]interface{}
 
 	for _, category := range categories {
-		var taskMaps []map[string]interface{}
-
-		for _, task := range category.Tasks {
-			taskMap := map[string]interface{}{
-				"id": task.ID,
-				"title": task.Title,
-				"description": task.Description,
-				"user_id": task.UserID,
-				"category_id": task.CategoryID,
-				"created_at": task.CreatedAt,
-				"updated_at": task.UpdatedAt,
-			}
-
-			taskMaps = append(taskMaps, taskMap)
-		}
-
-		categoryMap := map[string]interface{}{
-			"id": category.ID,
-			"type": category.Type,
-			"created_at": category.CreatedAt,
-			"updated_at": category.UpdatedAt,
-			"Tasks": taskMaps,
-		}
-
+		categoryMap := createCategoryMap(category)
 		categoriesMaps = append(categoriesMaps, categoryMap)
 	}
 
 	context.JSON(http.StatusOK, categoriesMaps)
+}
+
+func createCategoryMap(category *model.Category) map[string]interface{} {
+	var taskMaps []map[string]interface{}
+
+	for _, task := range category.Tasks {
+		taskMap := createTaskMap(&task)
+		taskMaps = append(taskMaps, taskMap)
+	}
+
+	return map[string]interface{}{
+		"id": category.ID,
+		"type": category.Type,
+		"created_at": category.CreatedAt,
+		"updated_at": category.UpdatedAt,
+		"Tasks": taskMaps,
+	}
+}
+
+func createTaskMap(task *model.Task) map[string]interface{} {
+	return map[string]interface{}{
+		"id": task.ID,
+		"title": task.Title,
+		"description": task.Description,
+		"user_id": task.UserID,
+		"category_id": task.CategoryID,
+		"created_at": task.CreatedAt,
+		"updated_at": task.UpdatedAt,
+	}
 }
 
 // DeleteCategory godoc

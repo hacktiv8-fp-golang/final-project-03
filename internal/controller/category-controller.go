@@ -83,6 +83,20 @@ func UpdateCategory(context *gin.Context) {
 	})
 }
 
+// GetAllCategories godoc
+// @Summary Get all categories
+// @Description Retrieve a list of all categories
+// @Tags Categories
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer Token"
+// @Success 200 {object} []model.Category
+// @Failure 400 {object} helper.ErrorResponse "Bad Request"
+// @Failure 401 {object} helper.ErrorResponse "Unauthorized"
+// @Failure 404 {object} helper.ErrorResponse "Not Found"
+// @Failure 500 {object} helper.ErrorResponse "Server Error"
+// @Security Bearer
+// @Router /categories [get]
 func GetAllCategories(context *gin.Context) {
 	categories, err := service.CategoryService.GetAllCategories()
 
@@ -124,6 +138,21 @@ func GetAllCategories(context *gin.Context) {
 	context.JSON(http.StatusOK, categoriesMaps)
 }
 
+// DeleteCategory godoc
+// @Summary Delete a category item
+// @Description Delete a category item by id
+// @Tags Categories
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer Token"
+// @Param categoryId path int true "Category id"
+// @Success 200 {string} string "OK"
+// @Failure 400 {object} helper.ErrorResponse "Bad Request"
+// @Failure 401 {object} helper.ErrorResponse "Unauthorized"
+// @Failure 404 {object} helper.ErrorResponse "Not Found"
+// @Failure 500 {object} helper.ErrorResponse "Server Error"
+// @Security Bearer
+// @Router /categories/{categoryId} [delete]
 func DeleteCategory(context *gin.Context) {
 	id, _ := helper.GetIdParam(context, "categoryId")
 

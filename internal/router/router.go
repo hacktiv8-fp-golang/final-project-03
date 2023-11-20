@@ -7,11 +7,12 @@ import (
 	"github.com/gin-gonic/gin"
 
 	_ "final-project-03/docs"
+
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-var PORT = ":8080"
+var PORT = ":8089"
 
 func StartServer() {
 	router := gin.Default()
@@ -33,13 +34,15 @@ func StartServer() {
 		categoryRouter.DELETE("/:categoryId", middleware.AdminAuthorization(), middleware.CategoryAuthorization(), controller.DeleteCategory)
 	}
 
-	taskRouter := router.Group("/comments")
+	taskRouter := router.Group("/tasks")
 	{
-		taskRouter.POST("/")
-		taskRouter.GET("/")
-		taskRouter.PUT("/:taskId")
-		taskRouter.PATCH("/update-status/:taskId")
-		taskRouter.DELETE("/:taskId")
+		taskRouter.Use(middleware.Authentication())
+		taskRouter.POST("/", controller.CreateTask)
+		taskRouter.GET("/", controller.GetAllTasks)
+		taskRouter.PUT("/:taskId", middleware.TaskAuthorization(), controller.UpdateTask)
+		taskRouter.PATCH("/update-status/:taskId", middleware.TaskAuthorization(), controller.UpdateStatusTask)
+		taskRouter.PATCH("/update-category/:taskId", middleware.TaskAuthorization(), controller.UpdateCategoryIdTask)
+		taskRouter.DELETE("/:taskId", middleware.TaskAuthorization(), controller.DeleteTask)
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

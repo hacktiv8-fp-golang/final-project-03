@@ -46,3 +46,35 @@ func CategoryAuthorization() gin.HandlerFunc {
 		context.Next()
 	}
 }
+
+func TaskAuthorization() gin.HandlerFunc {
+	return func(context *gin.Context) {
+		taskId, err := helper.GetIdParam(context, "taskId")
+
+		if err != nil {
+			context.AbortWithStatusJSON(err.Status(), err)
+			return
+		}
+
+		userData := context.MustGet("userData").(jwt.MapClaims)
+		userID := uint(userData["id"].(float64))
+
+		db := database.GetDB()
+		task := model.Task{}
+
+		errMsg := db.Select("user_id").First(&task, taskId).Error
+		if errMsg != nil {
+			err := helper.NotFound("Data not found")
+			context.AbortWithStatusJSON(err.Status(), err)
+			return
+		}
+
+		if task.UserID != userID {
+			err := helper.Unautorized("You are not allowed to access this data")
+			context.AbortWithStatusJSON(err.Status(), err)
+			return
+		}
+
+		context.Next()
+	}
+}

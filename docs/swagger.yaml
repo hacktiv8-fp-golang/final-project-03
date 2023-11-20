@@ -61,6 +61,66 @@ definitions:
       user_id:
         type: integer
     type: object
+  model.TaskCategoryUpdate:
+    properties:
+      category_id:
+        type: integer
+    type: object
+  model.TaskCreate:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      title:
+        type: string
+    type: object
+  model.TaskCreateResponse:
+    properties:
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      status:
+        type: boolean
+      title:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.TaskStatusUpdate:
+    properties:
+      status:
+        type: boolean
+    type: object
+  model.TaskUpdate:
+    properties:
+      description:
+        type: string
+      title:
+        type: string
+    type: object
+  model.TaskUpdateResponse:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      id:
+        type: integer
+      status:
+        type: boolean
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
   model.User:
     properties:
       created_at:
@@ -267,6 +327,253 @@ paths:
       summary: Update a Category.
       tags:
       - Categories
+  /task/{taskId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a task item by id
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Task id
+        in: path
+        name: taskId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Delete a task item
+      tags:
+      - Task
+  /tasks:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all task
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Task'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get all task
+      tags:
+      - Task
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Task object to be created
+        in: body
+        name: model.Category
+        required: true
+        schema:
+          $ref: '#/definitions/model.TaskCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Task created successfully
+          schema:
+            $ref: '#/definitions/model.TaskCreateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Creates a new task
+      tags:
+      - Task
+  /tasks/{taskId}:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Task ID
+        in: path
+        name: taskId
+        required: true
+        type: integer
+      - description: Task object to be updated
+        in: body
+        name: model.Task
+        required: true
+        schema:
+          $ref: '#/definitions/model.TaskUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Task updated successfully
+          schema:
+            $ref: '#/definitions/model.TaskUpdateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Update a Task.
+      tags:
+      - Task
+  /tasks/update-category/{taskId}:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Task ID
+        in: path
+        name: taskId
+        required: true
+        type: integer
+      - description: Task Category object to be updated
+        in: body
+        name: model.Task
+        required: true
+        schema:
+          $ref: '#/definitions/model.TaskCategoryUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Task Category updated successfully
+          schema:
+            $ref: '#/definitions/model.TaskUpdateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Update a Task.
+      tags:
+      - Task
+  /tasks/update-status/{taskId}:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Task ID
+        in: path
+        name: taskId
+        required: true
+        type: integer
+      - description: Task Status object to be updated
+        in: body
+        name: model.Task
+        required: true
+        schema:
+          $ref: '#/definitions/model.TaskStatusUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Task Status updated successfully
+          schema:
+            $ref: '#/definitions/model.TaskUpdateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+        "500":
+          description: Server Error
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Update a Task.
+      tags:
+      - Task
   /users/delete-account:
     delete:
       consumes:

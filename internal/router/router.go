@@ -12,7 +12,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-var PORT = ":8089"
+var PORT = ":8080"
 
 func StartServer() {
 	router := gin.Default()
@@ -21,8 +21,8 @@ func StartServer() {
 	{
 		userRouter.POST("/register", controller.Register)
 		userRouter.POST("/login", controller.Login)
-		userRouter.PUT("/update-account", controller.UpdateUser)
-		userRouter.DELETE("/delete-account", controller.DeleteUser)
+		userRouter.PUT("/update-account", middleware.Authentication(), controller.UpdateUser)
+		userRouter.DELETE("/delete-account", middleware.Authentication(), controller.DeleteUser)
 	}
 
 	categoryRouter := router.Group("/categories")
@@ -30,7 +30,7 @@ func StartServer() {
 		categoryRouter.Use(middleware.Authentication())
 		categoryRouter.POST("/", middleware.AdminAuthorization(), controller.CreateCategory)
 		categoryRouter.GET("/", controller.GetAllCategories)
-		categoryRouter.PATCH("/:categoryId",  middleware.AdminAuthorization(), middleware.CategoryAuthorization(), controller.UpdateCategory)
+		categoryRouter.PATCH("/:categoryId", middleware.AdminAuthorization(), middleware.CategoryAuthorization(), controller.UpdateCategory)
 		categoryRouter.DELETE("/:categoryId", middleware.AdminAuthorization(), middleware.CategoryAuthorization(), controller.DeleteCategory)
 	}
 

@@ -22,8 +22,8 @@ type UserCreate struct {
 }
 
 type UserUpdate struct {
-	FullName string `gorm:"not null" json:"full_name"`
-	Email    string `gorm:"not null;unique" json:"email" valid:"email"`
+	FullName string `gorm:"not null" json:"full_name" valid:"required"`
+	Email    string `gorm:"not null;unique" json:"email" valid:"required,email"`
 }
 
 type LoginCredential struct {

@@ -3,6 +3,7 @@ package router
 import (
 	"final-project-03/internal/controller"
 	"final-project-03/internal/middleware"
+	"os"
 
 	"github.com/gin-gonic/gin"
 
@@ -11,8 +12,6 @@ import (
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
-
-var PORT = ":8080"
 
 func StartServer() {
 	router := gin.Default()
@@ -47,5 +46,6 @@ func StartServer() {
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
-	router.Run(PORT)
+	var PORT = os.Getenv("PORT")
+	router.Run(":" +PORT)
 }

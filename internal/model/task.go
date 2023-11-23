@@ -29,11 +29,11 @@ type TaskUpdate struct {
 }
 
 type TaskStatusUpdate struct {
-	Status bool `json:"status" gorm:"not null"`
+	Status bool `json:"status" gorm:"not null" valid:"required"`
 }
 
 type TaskCategoryUpdate struct {
-	CategoryID uint `json:"category_id"`
+	CategoryID uint `json:"category_id" valid:"required"`
 }
 
 type TaskCreateResponse struct {

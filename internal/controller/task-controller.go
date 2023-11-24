@@ -16,12 +16,14 @@ import (
 // @Tags Task
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer Token"
 // @Param model.Category body model.TaskCreate true "Task object to be created"
 // @Success 201 {object} model.TaskCreateResponse "Task created successfully"
 // @Failure 400 {object} helper.ErrorResponse "Bad Request"
 // @Failure 401 {object} helper.ErrorResponse "Unauthorized"
 // @Failure 422 {object} helper.ErrorResponse "Unprocessable Entity"
 // @Failure 500 {object} helper.ErrorResponse "Server Error"
+// @Security Bearer
 // @Router /tasks [post]
 func CreateTask(context *gin.Context){
 	var task model.Task
@@ -108,6 +110,7 @@ func GetAllTasks (context *gin.Context){
 // @Tags Task
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer Token"
 // @Param taskId path int true "Task ID"
 // @Param model.Task body model.TaskUpdate true "Task object to be updated"
 // @Success 200 {object} model.TaskUpdateResponse "Task updated successfully"
@@ -115,6 +118,7 @@ func GetAllTasks (context *gin.Context){
 // @Failure 401 {object} helper.ErrorResponse "Unauthorized"
 // @Failure 422 {object} helper.ErrorResponse "Unprocessable Entity"
 // @Failure 500 {object} helper.ErrorResponse "Server Error"
+// @Security Bearer
 // @Router /tasks/{taskId} [put]
 func UpdateTask (context *gin.Context){
 	var task model.TaskUpdate
@@ -151,6 +155,7 @@ func UpdateTask (context *gin.Context){
 // @Tags Task
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer Token"
 // @Param taskId path int true "Task ID"
 // @Param model.Task body model.TaskStatusUpdate true "Task Status object to be updated"
 // @Success 200 {object} model.TaskUpdateResponse "Task Status updated successfully"
@@ -158,6 +163,7 @@ func UpdateTask (context *gin.Context){
 // @Failure 401 {object} helper.ErrorResponse "Unauthorized"
 // @Failure 422 {object} helper.ErrorResponse "Unprocessable Entity"
 // @Failure 500 {object} helper.ErrorResponse "Server Error"
+// @Security Bearer
 // @Router /tasks/update-status/{taskId} [patch]
 func UpdateStatusTask (context *gin.Context){
 	var task model.TaskStatusUpdate
@@ -194,6 +200,7 @@ func UpdateStatusTask (context *gin.Context){
 // @Tags Task
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer Token"
 // @Param taskId path int true "Task ID"
 // @Param model.Task body model.TaskCategoryUpdate true "Task Category object to be updated"
 // @Success 200 {object} model.TaskUpdateResponse "Task Category updated successfully"
@@ -201,6 +208,7 @@ func UpdateStatusTask (context *gin.Context){
 // @Failure 401 {object} helper.ErrorResponse "Unauthorized"
 // @Failure 422 {object} helper.ErrorResponse "Unprocessable Entity"
 // @Failure 500 {object} helper.ErrorResponse "Server Error"
+// @Security Bearer
 // @Router /tasks/update-category/{taskId} [patch]
 func UpdateCategoryIdTask (context *gin.Context){
 	var task model.TaskCategoryUpdate

@@ -8,7 +8,7 @@ import (
 // @title           Kanban Board
 // @version         1.0
 // @description     This is a simple server mimicking Instagram server.
-// @host            localhost:8080
+// @host            final-project-03-production.up.railway.app/
 
 func main() {
 	database.StartDB()

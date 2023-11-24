@@ -84,12 +84,14 @@ func Login(context *gin.Context) {
 // @Tags Users
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer Token"
 // @Param model.User body model.UserUpdate true "User object to be updated"
 // @Success 200 {object} model.User "User updated successfully"
 // @Failure 400 {object} helper.ErrorResponse "Bad Request"
 // @Failure 401 {object} helper.ErrorResponse "Unauthorized"
 // @Failure 422 {object} helper.ErrorResponse "Unprocessable Entity"
 // @Failure 500 {object} helper.ErrorResponse "Server Error"
+// @Security Bearer
 // @Router /users/update-account [put]
 func UpdateUser(context *gin.Context) {
 	var update model.UserUpdate
@@ -123,11 +125,13 @@ func UpdateUser(context *gin.Context) {
 // @Tags Users
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer Token"
 // @Success 200 {object} model.User "User deleted successfully"
 // @Failure 400 {object} helper.ErrorResponse "Bad Request"
 // @Failure 401 {object} helper.ErrorResponse "Unauthorized"
 // @Failure 422 {object} helper.ErrorResponse "Unprocessable Entity"
 // @Failure 500 {object} helper.ErrorResponse "Server Error"
+// @Security Bearer
 // @Router /users/delete-account [delete]
 func DeleteUser(context *gin.Context) {
 	userData := context.MustGet("userData").(jwt.MapClaims)

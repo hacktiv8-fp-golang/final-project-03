@@ -79,6 +79,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -90,6 +95,13 @@ const docTemplate = `{
                 ],
                 "summary": "Creates a new category",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Category object to be created",
                         "name": "model.Category",
@@ -136,6 +148,11 @@ const docTemplate = `{
         },
         "/categories/{categoryId}": {
             "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -147,6 +164,13 @@ const docTemplate = `{
                 ],
                 "summary": "Update a Category.",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "Category ID",
@@ -396,6 +420,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -407,6 +436,13 @@ const docTemplate = `{
                 ],
                 "summary": "Creates a new task",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Task object to be created",
                         "name": "model.Category",
@@ -453,6 +489,11 @@ const docTemplate = `{
         },
         "/tasks/update-category/{taskId}": {
             "patch": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -464,6 +505,13 @@ const docTemplate = `{
                 ],
                 "summary": "Update a Task.",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "Task ID",
@@ -517,6 +565,11 @@ const docTemplate = `{
         },
         "/tasks/update-status/{taskId}": {
             "patch": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -528,6 +581,13 @@ const docTemplate = `{
                 ],
                 "summary": "Update a Task.",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "Task ID",
@@ -581,6 +641,11 @@ const docTemplate = `{
         },
         "/tasks/{taskId}": {
             "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -592,6 +657,13 @@ const docTemplate = `{
                 ],
                 "summary": "Update a Task.",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "Task ID",
@@ -645,6 +717,11 @@ const docTemplate = `{
         },
         "/users/delete-account": {
             "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -655,6 +732,15 @@ const docTemplate = `{
                     "Users"
                 ],
                 "summary": "Delete an Account.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "User deleted successfully",
@@ -805,6 +891,11 @@ const docTemplate = `{
         },
         "/users/update-account": {
             "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -816,6 +907,13 @@ const docTemplate = `{
                 ],
                 "summary": "Update an Account.",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "User object to be updated",
                         "name": "model.User",
@@ -1114,7 +1212,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "final-project-03-production.up.railway.app/",
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "Kanban Board",

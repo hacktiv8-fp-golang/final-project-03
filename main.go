@@ -7,7 +7,7 @@ import (
 
 // @title           Kanban Board
 // @version         1.0
-// @description     This is a simple server mimicking Instagram server.
+// @description     API for managing projects, tasks, and users within a project management system.
 // @host            final-project-03-production.up.railway.app/
 
 func main() {

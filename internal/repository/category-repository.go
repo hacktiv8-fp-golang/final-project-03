@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"final-project-03/internal/database"
-	"final-project-03/internal/helper"
-	"final-project-03/internal/model"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/database"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/helper"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/model"
 )
 
 type categoryModelRepo interface {

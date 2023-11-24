@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"final-project-03/internal/database"
-	"final-project-03/internal/helper"
-	"final-project-03/internal/model"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/database"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/helper"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/model"
 )
 
 type taskModelRepo interface {
@@ -12,7 +12,7 @@ type taskModelRepo interface {
 	UpdateTask(input *model.TaskUpdate, taskID uint) (*model.Task, helper.Error)
 	UpdateStatusTask(taskStatus *model.TaskStatusUpdate, taskID uint) (*model.Task, helper.Error)
 	UpdateCategoryIdTask(input *model.TaskCategoryUpdate, taskID uint) (*model.Task, helper.Error)
-	
+
 	DeleteTask(taskId uint) helper.Error
 }
 
@@ -98,7 +98,7 @@ func (t *taskModel) DeleteTask(taskId uint) helper.Error {
 	var task model.Task
 
 	err := db.Where("id = ?", taskId).Delete(&task).Error
-	
+
 	if err != nil {
 		return helper.ParseError(err)
 	}

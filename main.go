@@ -1,8 +1,8 @@
 package main
 
 import (
-	"final-project-03/internal/database"
-	"final-project-03/internal/router"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/database"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/router"
 )
 
 // @title           Kanban Board

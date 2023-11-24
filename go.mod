@@ -1,4 +1,4 @@
-module final-project-03
+module github.com/hacktiv8-fp-golang/final-project-03
 
 go 1.20
 

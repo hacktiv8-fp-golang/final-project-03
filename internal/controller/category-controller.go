@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"final-project-03/internal/helper"
-	"final-project-03/internal/model"
-	"final-project-03/internal/service"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/helper"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/model"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

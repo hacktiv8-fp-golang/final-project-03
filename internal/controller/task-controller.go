@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"final-project-03/internal/helper"
-	"final-project-03/internal/model"
-	"final-project-03/internal/service"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/helper"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/model"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/service"
 	"net/http"
 	"strconv"
 
@@ -25,16 +25,16 @@ import (
 // @Router /tasks [post]
 func CreateTask(context *gin.Context){
 	var task model.Task
-	
+
 	if err := context.ShouldBindJSON(&task); err != nil {
 		errorHandler := helper.UnprocessibleEntity("Invalid JSON body")
     context.AbortWithStatusJSON(errorHandler.Status(), errorHandler)
     return
 	}
-	
+
 	userData := context.MustGet("userData").(jwt.MapClaims)
 	userID := uint(userData["id"].(float64))
-	
+
 	task.Status = false
 
 
@@ -73,12 +73,12 @@ func CreateTask(context *gin.Context){
 func GetAllTasks (context *gin.Context){
 
 	results, err := service.TaskService.GetAllTasks()
-	
+
 	if err != nil {
 		context.JSON(err.Status(), err)
 		return
 	}
-	
+
 	tasks := make([]gin.H, 0, len(results))
 
 	for _, result := range results {
@@ -96,10 +96,10 @@ func GetAllTasks (context *gin.Context){
 				"full_name": 	result.User.FullName,
 			},
 		}
-	
+
 		tasks = append(tasks, task)
 	}
-	
+
 	context.JSON(http.StatusOK, tasks)
 }
 

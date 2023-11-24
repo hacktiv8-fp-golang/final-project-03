@@ -1,9 +1,9 @@
 package service
 
 import (
-	"final-project-03/internal/helper"
-	"final-project-03/internal/model"
-	"final-project-03/internal/repository"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/helper"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/model"
+	"github.com/hacktiv8-fp-golang/final-project-03/internal/repository"
 
 	"github.com/asaskevich/govalidator"
 )
@@ -28,14 +28,14 @@ func (t *taskService) CreateTask(task *model.Task, userID uint) (*model.Task, he
 		return nil, helper.BadRequest(err.Error())
 	}
 
-	_, err := repository.CategoryModel.GetCategoryById(task.CategoryID); 
+	_, err := repository.CategoryModel.GetCategoryById(task.CategoryID);
 
 	if err != nil {
 		return nil, err
 	}
 
 	createdTask, err := repository.TaskModel.CreateTask(task)
-	
+
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +86,7 @@ func (t *taskService) UpdateCategoryIdTask(Updatetask *model.TaskCategoryUpdate,
 		return nil, helper.BadRequest(err.Error())
 	}
 
-	_, err := repository.CategoryModel.GetCategoryById(Updatetask.CategoryID); 
+	_, err := repository.CategoryModel.GetCategoryById(Updatetask.CategoryID);
 
 	if err != nil {
 		return nil, err

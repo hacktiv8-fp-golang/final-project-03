@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a simple server mimicking Instagram server.",
+        "description": "API for managing projects, tasks, and users within a project management system.",
         "title": "Kanban Board",
         "contact": {},
         "version": "1.0"

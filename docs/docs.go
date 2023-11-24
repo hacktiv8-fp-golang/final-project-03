@@ -1216,7 +1216,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "Kanban Board",
-	Description:      "This is a simple server mimicking Instagram server.",
+	Description:      "API for managing projects, tasks, and users within a project management system.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

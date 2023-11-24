@@ -161,7 +161,8 @@ definitions:
 host: final-project-03-production.up.railway.app/
 info:
   contact: {}
-  description: This is a simple server mimicking Instagram server.
+  description: API for managing projects, tasks, and users within a project management
+    system.
   title: Kanban Board
   version: "1.0"
 paths:

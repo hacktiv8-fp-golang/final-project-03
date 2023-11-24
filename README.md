@@ -50,6 +50,7 @@ The project is built using the following technologies:
 ```sh
   go run main.go
 ```
+## API Documentation
 
 The API documentation can be found [here](https://final-project-03-production.up.railway.app/swagger/index.html).
 
